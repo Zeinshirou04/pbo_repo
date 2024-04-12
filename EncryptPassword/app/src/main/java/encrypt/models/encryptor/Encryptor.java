@@ -1,4 +1,4 @@
-package encrypt.models;
+package encrypt.models.encryptor;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;

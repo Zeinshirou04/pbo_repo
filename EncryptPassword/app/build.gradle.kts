@@ -23,6 +23,9 @@ dependencies {
 
     // This dependency is used by the application.
     implementation(libs.guava)
+
+    // Common CSV Dependencies
+    implementation("org.apache.commons:commons-csv:1.10.0")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -35,6 +38,10 @@ java {
 application {
     // Define the main class for the application.
     mainClass = "encrypt.App"
+}
+
+run {
+    standardInput = System.in
 }
 
 tasks.named<Test>("test") {

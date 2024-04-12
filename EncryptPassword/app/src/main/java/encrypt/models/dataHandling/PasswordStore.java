@@ -1,4 +1,6 @@
-package encrypt.models;
+package encrypt.models.dataHandling;
+
+import encrypt.models.encryptor.Encryptor;
 
 public class PasswordStore {
 
@@ -47,6 +49,17 @@ public class PasswordStore {
         setPassword(plainPass);
         setCategory(category);
     }
+
+    public PasswordStore(String name, String username, String plainPass, int category, String hashKey, double score) {
+        
+        // Receive the information
+        this.name = name;
+        this.username = username;
+        this.hashkey = hashKey;
+        this.score = score;
+        setPassword(plainPass);
+        setCategory(category);
+    }
     
     public void setPassword(String plainPass) {
         try {
@@ -65,6 +78,18 @@ public class PasswordStore {
             System.out.println(e);
         }
         return plainPass;
+    }
+
+    public String getEncPassword() {
+        return this.password;
+    }
+
+    public String getHashkey() {
+        return this.hashkey;
+    }
+
+    public double getScore() {
+        return this.score;
     }
     
     public void setCategory(int category) {
@@ -92,6 +117,10 @@ public class PasswordStore {
                 break;
         }
         return category;
+    }
+
+    public int getCategoryCode() {
+        return this.category;
     }
     
     public void calculateScore(String plainPass) {
