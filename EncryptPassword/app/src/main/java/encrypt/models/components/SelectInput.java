@@ -16,9 +16,10 @@ public class SelectInput {
     }
 
     public void draw() {
+        System.out.println("| " + this.label);
         for(int i = 0; i < this.selection.length; i++) {
             System.out.print("| ");
-            System.out.println("[" + (i + 1) + "]" + this.selection[i]);
+            System.out.println(" [" + (i + 1) + "]" + this.selection[i]);
         }
         System.out.print("| Pilihan: ");
         this.value = this.input.input.nextInt();

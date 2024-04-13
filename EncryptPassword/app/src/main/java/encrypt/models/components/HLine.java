@@ -3,6 +3,10 @@ package encrypt.models.components;
 public class HLine {
     public int width;
 
+    public HLine() {
+        
+    }
+
     public HLine(int width) {
         this.width = width;
     }

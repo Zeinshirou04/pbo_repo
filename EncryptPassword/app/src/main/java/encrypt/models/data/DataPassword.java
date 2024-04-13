@@ -19,7 +19,8 @@ public class DataPassword {
     public static final ArrayList<PasswordStore> passData = new ArrayList<>();
 
     // Digunakan sebagai path file csv dan header pada file csv
-    private static final String csvPath = "./dataPassword.csv";
+    private static final String csvPath = "./app/src/main/java/encrypt/assets/data/dataPassword.csv";
+    // private static final String csvPath = "./dataPassword.csv";
     private static final String [] csvHeader = {
         "name", "username", "password", "hashkey", "category", "score"
     }; 
@@ -32,12 +33,13 @@ public class DataPassword {
             try {
                 FileWriter csvWriter = new FileWriter(csvPath);
                 CSVFormat csvFormater = CSVFormat.DEFAULT.builder().setHeader(csvHeader).build();
-                CSVPrinter csvPrinter = new CSVPrinter(csvWriter, csvFormater);
-                for(PasswordStore pass: passData) {
-                    csvPrinter.printRecord(pass.name, pass.username, pass.getEncPassword(), pass.getHashkey(), pass.getCategoryCode(), pass.getScore());
-                    System.out.println("Data berhasil disimpan");
+                try (CSVPrinter csvPrinter = new CSVPrinter(csvWriter, csvFormater)) {
+                    for(PasswordStore pass: passData) {
+                        csvPrinter.printRecord(pass.name, pass.username, pass.getEncPassword(), pass.getHashkey(), pass.getCategoryCode(), pass.getScore());
+                        // System.out.println("Data berhasil disimpan");
+                    }
+                    csvPrinter.flush();
                 }
-                // csvPrinter.flush();
             } catch(Exception ex) {
                 Logger.getLogger(DataPassword.class.getName()).log(Level.SEVERE, null, ex);
             }
