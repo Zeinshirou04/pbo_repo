@@ -1,5 +1,7 @@
 package encrypt.models.pages;
 
+import javax.xml.crypto.Data;
+
 import encrypt.models.components.HLine;
 import encrypt.models.components.Input;
 import encrypt.models.components.Label;
@@ -44,16 +46,20 @@ public class ListPasswordPage {
     }
 
     public void drawContent() {
-        this.space.draw();
         DataPassword.loadCSVData();
         int size = this.width / 4;
+        int length = DataPassword.passData.size();
+        new Label(String.format("| Jumlah data terdapat sebanyak %d data", length), this.width).draw();
+        this.space.draw();
+        new HLine("-", this.width).draw();
+        this.space.draw();
         String textFormat = "| %-" + size + "s | %-" + size + "s | %-" + size + "s |";
         for(PasswordStore data : DataPassword.passData) {
             this.label = new Label(String.format(textFormat, data.name, data.username, data.getCategory()), this.width);
             this.label.draw();
         }
         this.drawFooter();
-        Input input = new Input("Press Enter to Continue: ");
+        Input input = new Input("Press Enter to Continue");
         input.draw();
     }
 

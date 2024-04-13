@@ -1,5 +1,7 @@
 package encrypt.models.components;
 
+import java.util.InputMismatchException;
+
 public class SelectInput {
 
     public String label;
@@ -22,7 +24,11 @@ public class SelectInput {
             System.out.println(" [" + (i + 1) + "]" + this.selection[i]);
         }
         System.out.print("| Pilihan: ");
-        this.value = this.input.input.nextInt();
+        try {
+            this.value = this.input.input.nextInt();
+        } catch (InputMismatchException e) {
+            this.value = 00;
+        }
     }
 
     public int getValue() {

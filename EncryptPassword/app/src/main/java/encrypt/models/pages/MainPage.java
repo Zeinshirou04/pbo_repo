@@ -8,6 +8,7 @@ import encrypt.models.components.SelectInput;
 public class MainPage {
     
     public String title;
+    public String errMsg;
     public int width;
 
     private Label label;
@@ -24,12 +25,12 @@ public class MainPage {
     }
 
     public void draw() {
-        System.out.print("\033[H\033[2J");  
-        System.out.flush();
         this.drawHeader();
         this.space.draw();
         this.drawContent();
         this.drawFooter();
+        System.out.print("\033[H\033[2J");  
+        System.out.flush();
         this.draw();
     }
 
@@ -49,6 +50,11 @@ public class MainPage {
             "View Saved Data",
             "Exit Application"
         };
+        
+        if(this.errMsg != null) {
+            new Label(this.errMsg, this.width).draw();
+            this.space.draw();
+        }
 
         SelectInput pageSelect = new SelectInput("Select Page: ", pagesList, this.width);
 
@@ -56,7 +62,11 @@ public class MainPage {
 
         pageSelect.draw();
         value = pageSelect.getValue();
+
         switch(value) {
+            case 00:
+                this.errMsg = "Invalid Input (Input must be a number, text given)";
+                break;
             case 1:
                 InputPage inputPage = new InputPage("Data Registration", this.width);
                 inputPage.draw();
@@ -68,7 +78,7 @@ public class MainPage {
             case 3:
                 this.drawFooter();
                 this.space.draw();
-                this.label = new Label("Exiting Application...", this.width);
+                new Label("Exiting Application...", this.width);
                 this.label.draw();
                 this.drawFooter();
                 System.out.print("\033[H\033[2J");  
@@ -76,7 +86,7 @@ public class MainPage {
                 System.exit(0);
                 break;
             default:
-                this.label = new Label("Invalid Input", this.width);
+                this.errMsg = String.format("Invalid Input (Input must be a number between 1 and 3, %d given)", value);
                 break;
         }
     }
