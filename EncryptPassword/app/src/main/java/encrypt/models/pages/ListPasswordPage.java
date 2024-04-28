@@ -1,7 +1,5 @@
 package encrypt.models.pages;
 
-import javax.xml.crypto.Data;
-
 import encrypt.models.components.HLine;
 import encrypt.models.components.Input;
 import encrypt.models.components.Label;
@@ -9,16 +7,10 @@ import encrypt.models.components.Space;
 import encrypt.models.data.DataPassword;
 import encrypt.models.dataHandling.PasswordStore;
 
-public class ListPasswordPage {
-    public String title;
-    public int width;
+public class ListPasswordPage extends BasePage {
 
-    private Label label;
-    private final HLine hline;
-    private final Space space;
-
-    public ListPasswordPage(String title, int width) {
-        this.title = title;
+    public ListPasswordPage(int width) {
+        super("Aplikasi Penyimpanan Password", width);
         this.width = width;
 
         this.hline = new HLine(width);
@@ -26,25 +18,7 @@ public class ListPasswordPage {
         this.label = new Label(title, width);
     }
 
-    public void draw() {
-        System.out.print("\033[H\033[2J");  
-        System.out.flush();
-        this.drawHeader();
-        this.space.draw();
-        this.drawContent();
-        this.drawFooter();
-    }
-
-    public void drawHeader() {
-        this.hline.draw();
-        this.space.draw();
-        this.space.draw();
-        this.label.draw();
-        this.space.draw();
-        this.space.draw();
-        this.hline.draw();
-    }
-
+    @Override
     public void drawContent() {
         DataPassword.loadCSVData();
         int size = this.width / 4;
@@ -61,10 +35,5 @@ public class ListPasswordPage {
         this.drawFooter();
         Input input = new Input("Press Enter to Continue");
         input.draw();
-    }
-
-    public void drawFooter() {
-        this.space.draw();
-        this.hline.draw();
     }
 }

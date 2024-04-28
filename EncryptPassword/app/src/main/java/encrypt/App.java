@@ -8,6 +8,6 @@ public class App {
         System.out.print("\033[H\033[2J");  
         System.out.flush();
         // System.out.println(System.getProperty("user.dir"));
-        new MainPage("Password Store Application", 70).draw();
+        new MainPage(70).draw();
     }
 }

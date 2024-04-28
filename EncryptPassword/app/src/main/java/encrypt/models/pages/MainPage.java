@@ -1,79 +1,55 @@
 package encrypt.models.pages;
 
-import encrypt.models.components.HLine;
+import encrypt.models.components.Components;
 import encrypt.models.components.Space;
 import encrypt.models.components.Label;
 import encrypt.models.components.SelectInput;
 
-public class MainPage {
+public class MainPage extends BasePage{
     
-    public String title;
     public String errMsg;
-    public int width;
 
-    private Label label;
-    private final HLine hline;
-    private final Space space;
+    SelectInput pageSelect;
 
-    public MainPage(String title, int width) {
-        this.title = title;
-        this.width = width;
+    public MainPage(int width) {
+        super("Aplikasi Penyimpanan Password", width);
+        this.components.add(new Label("Aplikasi Penyimpanan Password", width));
+        this.components.add(new Label("Simpan password anda dengan aman di sini", this.width));
+        this.components.add(new Space(this.width));
 
-        this.hline = new HLine(width);
-        this.space = new Space(width);
-        this.label = new Label(title, width);
-    }
-
-    public void draw() {
-        this.drawHeader();
-        this.space.draw();
-        this.drawContent();
-        this.drawFooter();
-        System.out.print("\033[H\033[2J");  
-        System.out.flush();
-        this.draw();
-    }
-
-    public void drawHeader() {
-        this.hline.draw();
-        this.space.draw();
-        this.space.draw();
-        this.label.draw();
-        this.space.draw();
-        this.space.draw();
-        this.hline.draw();
-    }
-
-    public void drawContent() {
         String [] pagesList = {
             "Register Data",
             "View Saved Data",
             "Exit Application"
         };
+
+        String [] pages = {"Input Password", "Tampil Password", "Keluar Aplikasi"};
+        this.pageSelect = new SelectInput("Pilih halaman berikut:", pages, this.width);
+        this.components.add(pageSelect);
+    }
+
+    public void drawContent() {
         
         if(this.errMsg != null) {
             new Label(this.errMsg, this.width).draw();
             this.space.draw();
         }
 
-        SelectInput pageSelect = new SelectInput("Select Page: ", pagesList, this.width);
+        for(Components widget: this.components) {
+            widget.draw();
+        }
 
-        int value;
-
-        pageSelect.draw();
-        value = pageSelect.getValue();
+        int value = pageSelect.getValue();
 
         switch(value) {
             case 00:
                 this.errMsg = "Invalid Input (Input must be a number, text given)";
                 break;
             case 1:
-                InputPage inputPage = new InputPage("Data Registration", this.width);
-                inputPage.draw();
+                new InputPage(this.width).draw();
                 break;
             case 2:
-                ListPasswordPage listPasswordPage = new ListPasswordPage("Saved Data", this.width);
-                listPasswordPage.draw();
+                new ListPasswordPage(this.width).draw();
                 break;
             case 3:
                 this.drawFooter();
@@ -89,6 +65,7 @@ public class MainPage {
                 this.errMsg = String.format("Invalid Input (Input must be a number between 1 and 3, %d given)", value);
                 break;
         }
+        new MainPage(70).draw();
     }
 
     public void drawFooter() {

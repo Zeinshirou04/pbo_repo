@@ -8,17 +8,18 @@ import encrypt.models.components.Space;
 import encrypt.models.data.DataPassword;
 import encrypt.models.dataHandling.PasswordStore;
 
-public class InputPage {
+public class InputPage extends BasePage {
 
-    public String title;
     public int width;
 
-    private Label label;
-    private final HLine hline;
-    private final Space space;
+    Input nameInput;
+    Input usernameInput;
+    Input passInput;
+    SelectInput catInput;
+    PasswordStore passStr;
 
-    public InputPage(String title, int width) {
-        this.title = title;
+    public InputPage(int width) {
+        super("Aplikasi Penyimpanan Password", width);
         this.width = width;
 
         this.hline = new HLine(width);
@@ -26,25 +27,7 @@ public class InputPage {
         this.label = new Label(title, width);
     }
 
-    public void draw() {
-        System.out.print("\033[H\033[2J");  
-        System.out.flush();
-        this.drawHeader();
-        this.space.draw();
-        this.drawContent();
-        this.drawFooter();
-    }
-
-    public void drawHeader() {
-        this.hline.draw();
-        this.space.draw();
-        this.space.draw();
-        this.label.draw();
-        this.space.draw();
-        this.space.draw();
-        this.hline.draw();
-    }
-
+    @Override
     public void drawContent() {
         String [] pagesList = {
             "Uncategorized",
@@ -53,15 +36,15 @@ public class InputPage {
             "Another Account"
         };
         
-        Input name = new Input("Data Label: ");
-        name.draw();
-        Input username = new Input("Username: ");
-        username.draw();
-        Input password = new Input("Password: ");
-        password.draw();
-        SelectInput category = new SelectInput("Select Category: ", pagesList, this.width);
-        category.draw();
-        PasswordStore data = new PasswordStore(name.getValue(), username.getValue(), password.getValue(), category.getValue() - 1);
+        nameInput = new Input("Data Label: ");
+        nameInput.draw();
+        usernameInput = new Input("Username: ");
+        usernameInput.draw();
+        passInput = new Input("Password: ");
+        passInput.draw();
+        catInput = new SelectInput("Select Category: ", pagesList, this.width);
+        catInput.draw();
+        PasswordStore data = new PasswordStore(nameInput.getValue(), usernameInput.getValue(), passInput.getValue(), catInput.getValue() - 1);
         try {
             DataPassword.loadCSVData();
             DataPassword.passData.add(data);
@@ -75,10 +58,5 @@ public class InputPage {
             e.printStackTrace();
             System.exit(0);
         }
-    }
-
-    public void drawFooter() {
-        this.space.draw();
-        this.hline.draw();
     }
 }

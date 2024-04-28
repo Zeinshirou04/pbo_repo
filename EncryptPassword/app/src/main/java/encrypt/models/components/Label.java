@@ -1,6 +1,6 @@
 package encrypt.models.components;
 
-public class Label {
+public class Label implements Components {
     public String text;
     public int width;
 
@@ -8,7 +8,8 @@ public class Label {
         this.text = text;
         this.width = width;
     }
-        
+    
+    @Override
     public void draw() {
         System.out.print("| " + this.text);
         for(int i = 0; i < this.width - 1 - this.text.length(); i++) {

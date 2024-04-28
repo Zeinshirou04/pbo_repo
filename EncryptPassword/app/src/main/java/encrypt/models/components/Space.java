@@ -1,6 +1,6 @@
 package encrypt.models.components;
 
-public class Space {
+public class Space implements Components {
     
     public int length;
 
@@ -8,6 +8,7 @@ public class Space {
         this.length = length;
     }
 
+    @Override
     public void draw() {
         System.out.print("|");
         for(int i = 0; i < this.length; i++) {

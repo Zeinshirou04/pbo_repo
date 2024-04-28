@@ -1,6 +1,6 @@
 package encrypt.models.components;
 
-public class HLine {
+public class HLine implements Components {
     public int width;
     public String line = "=";
     
@@ -17,6 +17,7 @@ public class HLine {
         this.width = width;
     }
 
+    @Override
     public void draw() {
         System.out.print("|");
         for(int i = 0; i < this.width; i++) {

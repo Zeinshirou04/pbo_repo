@@ -2,7 +2,7 @@ package encrypt.models.components;
 
 import java.util.InputMismatchException;
 
-public class SelectInput {
+public class SelectInput implements Components {
 
     public String label;
     public int width;
@@ -17,6 +17,7 @@ public class SelectInput {
         this.input = new Input(label);
     }
 
+    @Override
     public void draw() {
         System.out.println("| " + this.label);
         for(int i = 0; i < this.selection.length; i++) {

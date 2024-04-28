@@ -2,7 +2,7 @@ package encrypt.models.components;
 
 import java.util.Scanner;
 
-public class Input {
+public class Input implements Components{
 
     public String label;
     public Scanner input;
@@ -13,6 +13,7 @@ public class Input {
         this.input = new Scanner(System.in);
     }
 
+    @Override
     public void draw() {
         System.out.print("| " + this.label + ": ");
         this.value = this.input.nextLine();
